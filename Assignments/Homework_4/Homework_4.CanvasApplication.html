@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Homework 4 Canvas Application</title>
+  <style>
+    canvas {
+      border: 1px solid rgb(33, 12, 193);
+    }
+  </style>
+</head>
+<body>
+  <canvas
+   id="Canvas" 
+   width="650" 
+   height="650">
+  </canvas>
+
+  <script>
+    var canvas = document.getElementById('Canvas');
+    var ctx = canvas.getContext('2d');
+
+    var x = 325;
+    var y = 325;
+    var color = 'blue';
+
+    drawCircle();
+
+    function drawCircle() {
+      ctx.beginPath();
+      ctx.arc(x, y, 50, 0, 2 * Math.PI);
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.closePath();
+    }
+
+    function handleClick(event) {
+      var rect = canvas.getBoundingClientRect();
+      var mouseX = event.clientX - rect.left;
+      var mouseY = event.clientY - rect.top;
+
+      x = mouseX;
+      y = mouseY;
+
+      color = getRandomColor();
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      drawCircle();
+    }
+
+    function getRandomColor() {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    canvas.addEventListener('click', handleClick);
+  </script>
+</body>
+</html>
